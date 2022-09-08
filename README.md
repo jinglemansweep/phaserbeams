@@ -1,2 +1,3 @@
-# phaserbeams
-Phaser 3 Game Engine with WLED Support
+# PhaserBeams
+
+Phaser 3 Game Engine with WLED LED Strip Support
