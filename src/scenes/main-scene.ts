@@ -1,8 +1,9 @@
-import { Pixel } from '../objects/pixel';
+import { Strip } from '../objects/strip';
 import { PixelColor } from '../interfaces/pixel.interface';
+import { Pixel } from '../objects/pixel';
 
 export class MainScene extends Phaser.Scene {
-  private myPixel: Pixel;
+  private strip: Strip;
 
   constructor() {
     super({ key: 'MainScene' });
@@ -12,12 +13,13 @@ export class MainScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.myPixel = new Pixel({
+    this.strip = new Strip({
       scene: this,
-      x: 60,
-      y: 10,
-      color: PixelColor.RED
+      pixels: 120
     });
-
+    this.strip.update([PixelColor.RED, PixelColor.GREEN, PixelColor.BLUE]);
+    this.input.keyboard.on('keydown', (event: KeyboardEvent) => {
+      console.log(event.key);
+    });
   }
 }

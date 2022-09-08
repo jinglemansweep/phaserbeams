@@ -3,12 +3,12 @@ export enum PixelColor {
   GREEN = 0x00ff00,
   BLUE = 0x0000ff,
   WHITE = 0xffffff,
-  OFF = 0x000000
+  OFF = 0x222222
 }
 
 export interface IPixelConstructor {
+  name: string;
   scene: Phaser.Scene;
   x: number;
-  y: number;
   color: PixelColor;
 }
