@@ -3,9 +3,11 @@ import { Pixel } from './pixel';
 import { PixelColor } from '../interfaces/pixel.interface';
 
 export class Strip extends Phaser.GameObjects.Group {
+  public pixels: number;
   constructor(aParams: IStripConstructor) {
     super(aParams.scene, []);
     const { pixels, scene } = aParams;
+    this.pixels = pixels;
     const pixelWidth = (scene.game.config.width as number / pixels );
     let color;
     for (let i = 0; i < pixels; i++) {
@@ -13,13 +15,13 @@ export class Strip extends Phaser.GameObjects.Group {
     }
     this.scene.add.existing(this);
   }
-  update(pixels: Array<PixelColor>) {
+  update(pixels: Array<PixelColor> = []) {
     const updates: number[][] = [];
     this.children.iterate((pixel: Pixel, i) => {
       pixel.setColor(pixels[i] || PixelColor.OFF);
       updates.push(intToRGB(pixel.fillColor));
     });
-    console.log({ updates });
+    console.log('Strip Update');
     this.wledSend(updates);
   }
   wledSend(pixels: number[][]) {
