@@ -2,8 +2,13 @@
   "name": "phaserbeams",
   "version": "0.1.0",
   "description": "Phaser 3 Game Engine with WLED LED Strip Support",
-  "keywords": ["phaser", "wled", "engine"],
+  "keywords": [
+    "phaser",
+    "wled",
+    "engine"
+  ],
   "devDependencies": {
+    "less": "^4.1.3",
     "parcel-bundler": "1.12.5",
     "parcel-plugin-static-files-copy": "2.6.0",
     "typescript": "4.8.0-dev.20220730"
@@ -22,6 +27,6 @@
     "name": "JingleManSweep",
     "email": "jinglemansweep@gmail.com"
   },
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "homepage": "https://github.com/jinglemansweep/phaserbeams.git#readme"
 }

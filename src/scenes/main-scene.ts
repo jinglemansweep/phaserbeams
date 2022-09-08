@@ -1,33 +1,23 @@
-import { Redhat } from '../objects/redhat';
+import { Pixel } from '../objects/pixel';
+import { PixelColor } from '../interfaces/pixel.interface';
 
 export class MainScene extends Phaser.Scene {
-  private myRedhat: Redhat;
+  private myPixel: Pixel;
 
   constructor() {
     super({ key: 'MainScene' });
   }
 
   preload(): void {
-    this.load.image('redhat', 'images/redhat.png');
-    this.load.image('redParticle', 'images/red.png');
   }
 
   create(): void {
-    const particles = this.add.particles('redParticle');
-
-    const emitter = particles.createEmitter({
-      speed: 100,
-      scale: { start: 0.5, end: 0 },
-      blendMode: 'ADD'
-    });
-
-    this.myRedhat = new Redhat({
+    this.myPixel = new Pixel({
       scene: this,
-      x: 400,
-      y: 300,
-      texture: 'redhat'
+      x: 60,
+      y: 10,
+      color: PixelColor.RED
     });
 
-    emitter.startFollow(this.myRedhat);
   }
 }
