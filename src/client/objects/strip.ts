@@ -29,7 +29,7 @@ export class Strip extends Phaser.GameObjects.Group {
       updates.push(intToRGB(pixel.fillColor));
     });
     console.log('Strip Update');
-    await this.wledSend(updates);
+    // await this.wledSend(updates);
   }
 
   async wledSend(pixels: number[][]): Promise<void> {
