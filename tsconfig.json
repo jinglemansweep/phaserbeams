@@ -2,12 +2,13 @@
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
+    "rootDir": "./src/",
     "outDir": "./dist/",
     "target": "ES6",
     "sourceMap": false,
     "noImplicitAny": true,
     "strict": false
   },
-  "include": ["src/**/*"],
+  "include": ["./src/*/*.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
