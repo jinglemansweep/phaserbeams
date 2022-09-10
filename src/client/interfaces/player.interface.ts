@@ -1,4 +1,4 @@
-import { Strip } from "../objects/strip";
+import { Strip } from '../objects/strip';
 
 export interface IPlayerConstructor {
   strip: Strip;

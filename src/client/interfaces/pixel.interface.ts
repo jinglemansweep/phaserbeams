@@ -3,7 +3,7 @@ export enum PixelColor {
   GREEN = 0x00ff00,
   BLUE = 0x0000ff,
   WHITE = 0xffffff,
-  OFF = 0x222222
+  OFF = 0x222222,
 }
 
 export interface IPixelConstructor {

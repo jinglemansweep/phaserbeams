@@ -12,13 +12,17 @@ export class Player extends Phaser.GameObjects.GameObject {
     this.name = aParams.name;
     this.color = aParams.color;
     this.position = aParams.position;
-    this.scene.add.existing(this);    
+    this.scene.add.existing(this);
   }
-  
+
   move(amount: number): void {
     let newPosition = this.position + amount;
-    if (newPosition > this.strip.pixels ) { newPosition = this.strip.pixels; }
-    if (newPosition < 1) { newPosition = 1; }
+    if (newPosition > this.strip.pixels) {
+      newPosition = this.strip.pixels;
+    }
+    if (newPosition < 1) {
+      newPosition = 1;
+    }
     this.position = newPosition;
   }
 }

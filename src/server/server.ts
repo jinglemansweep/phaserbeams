@@ -14,9 +14,9 @@ const io = new Server(server, {
 app.use('/static', express.static(path.join(__dirname, '..', 'client')));
 
 app.get('/', function (request, response) {
-    response.sendFile(path.join(__dirname, '..', 'client', 'index.html'));
-})
+  response.sendFile(path.join(__dirname, '..', 'client', 'index.html'));
+});
 
-server.listen( port, () => {
-    console.log(`server started at http://localhost:${ port }`);
+server.listen(port, () => {
+  console.log(`server started at http://localhost:${port}`);
 });

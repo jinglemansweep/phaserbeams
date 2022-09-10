@@ -10,7 +10,7 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   parent: 'game',
   physics: {
-    default: 'arcade'
+    default: 'arcade',
   },
-  scene: [ MainScene ]
+  scene: [MainScene],
 };
