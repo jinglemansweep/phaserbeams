@@ -11,10 +11,10 @@ const io = new Server(server, {
   pingTimeout: 60000,
 });
 
-app.use('/static', express.static(__dirname + '/dist'));
+app.use('/static', express.static(path.join(__dirname, '..', 'client')));
 
 app.get('/', function (request, response) {
-    response.sendFile(path.join(__dirname, '..', 'client/index.html'));
+    response.sendFile(path.join(__dirname, '..', 'client', 'index.html'));
 })
 
 server.listen( port, () => {

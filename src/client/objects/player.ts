@@ -2,7 +2,7 @@ import { IPlayerConstructor } from '../interfaces/player.interface';
 import { Strip } from './strip';
 
 export class Player extends Phaser.GameObjects.GameObject {
-  private strip: Strip;
+  readonly strip: Strip;
   public color: number;
   public position: number;
 
@@ -14,7 +14,8 @@ export class Player extends Phaser.GameObjects.GameObject {
     this.position = aParams.position;
     this.scene.add.existing(this);    
   }
-  move(amount: number) {
+  
+  move(amount: number): void {
     let newPosition = this.position + amount;
     if (newPosition > this.strip.pixels ) { newPosition = this.strip.pixels; }
     if (newPosition < 1) { newPosition = 1; }

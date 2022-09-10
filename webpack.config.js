@@ -1,8 +1,8 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-    entry: './src/game.ts',
+    entry: './src/client/game.ts',
     mode: 'none',
     module: {
       rules: [
@@ -29,5 +29,11 @@ module.exports = {
       filename: 'bundle.js',
       path: path.resolve(__dirname, 'dist/client'),
     },
-    plugins: [new HtmlWebpackPlugin()],
+    plugins: [
+      new CopyPlugin({
+        patterns: [
+          { from: 'src/server/index.html', to: './index.html' }
+        ]
+      })
+    ]
 };

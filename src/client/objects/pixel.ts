@@ -9,7 +9,7 @@ export class Pixel extends Phaser.GameObjects.Ellipse {
     this.scene.add.existing(this);
   }
 
-  setColor(color: PixelColor) {
+  setColor(color: PixelColor): void {
     this.setFillStyle(color);
   }
 
