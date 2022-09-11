@@ -1,26 +1,22 @@
 import 'phaser';
+import { createClient } from '@supabase/supabase-js';
 import { GameConfig } from './config';
-import { MQTT, buildRandomId } from './utils';
-
-const mqttUri = process.env.MQTT_URI as string;
-const mqttUsername = process.env.MQTT_USERNAME as string;
-const mqttPassword = process.env.MQTT_PASSWORD as string;
-const mqttTopicPrefix = process.env.MQTT_TOPIC_PREFIX as string;
+import { buildRandomId } from './utils';
 
 export class Game extends Phaser.Game {
   constructor(config: Phaser.Types.Core.GameConfig) {
     super(config);
     const userId = buildRandomId();
-    const mqtt = new MQTT(
-      mqttUri,
-      mqttUsername,
-      mqttPassword,
-      mqttTopicPrefix,
-      userId
-    );
-    mqtt.publish(`register`, userId);
-    this.registry.set('mqtt', mqtt);
     this.registry.set('user.id', userId);
+    this.setupSupabase();
+  }
+
+  setupSupabase(): void {
+    const url = process.env.SUPABASE_URL as string;
+    const key = process.env.SUPABASE_KEY as string;
+    const client = createClient(url, key);
+    this.registry.set('supabase', client);
+    this.registry.set('supabase.user', client.auth.user());
   }
 }
 

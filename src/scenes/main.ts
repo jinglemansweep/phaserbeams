@@ -1,14 +1,11 @@
-import mqtt from 'mqtt';
-import { Strip } from '../objects/strip';
+import { Header } from '../objects/header';
 import { Player } from '../objects/player';
-import { PixelColor } from '../interfaces/pixel.interface';
-
-const mqttTopicPrefix = process.env.MQTT_TOPIC_PREFIX as string;
+import { Strip } from '../objects/strip';
 
 export class MainScene extends Phaser.Scene {
-  private mqtt: mqtt.Client;
-  private userId: string;
+  private userId?: string;
   private strip?: Strip;
+  private header?: Header;
   private players: Player[] = [];
 
   constructor() {
@@ -20,8 +17,8 @@ export class MainScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.mqtt = this.registry.get('mqtt');
     this.userId = this.registry.get('user.id');
+    this.header = new Header({ scene: this });
     this.strip = new Strip({ scene: this, pixels: 120 });
     this.players = [
       new Player({
@@ -49,7 +46,7 @@ export class MainScene extends Phaser.Scene {
 
   setupInput(): void {
     this.input.keyboard.on('keydown', async (event: KeyboardEvent) => {
-      this.mqtt.publish('input/key', event.key);
+      // this.mqtt.publish('input/key', event.key);
       if (event.key === 'q') {
         this.players[0].move(-1);
       }
@@ -62,7 +59,7 @@ export class MainScene extends Phaser.Scene {
       if (event.key === 'p') {
         this.players[1].move(1);
       }
-      const out = Array(this.strip?.pixels).fill(PixelColor.OFF);
+      const out = Array(this.strip?.pixels).fill(0);
       this.players.forEach((ply) => {
         out[ply.position - 1] = ply.color;
       });

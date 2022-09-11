@@ -1,5 +1,11 @@
-import { IPlayerConstructor } from '../interfaces/player.interface';
-import { Strip } from './strip';
+import { Strip } from '../objects/strip';
+
+export interface IPlayerConstructor {
+  strip: Strip;
+  name: string;
+  color: number;
+  position: number;
+}
 
 export class Player extends Phaser.GameObjects.GameObject {
   readonly strip: Strip;
