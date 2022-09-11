@@ -25,8 +25,10 @@ export class Strip extends Phaser.GameObjects.Group {
   async update(pixels: PixelColor[] = []): Promise<void> {
     const updates: number[][] = [];
     this.children.iterate((pixel: any, i) => {
-      pixel.setColor(pixels[i]);
-      updates.push(intToRGB(pixel.fillColor));
+      if (!isNaN(i)) {
+        pixel.setColor(pixels[i]);
+        updates.push(intToRGB(pixel.fillColor));
+      }
     });
     // console.log('Strip Update');
     // await this.wledSend(updates);

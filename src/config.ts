@@ -1,4 +1,4 @@
-import { MainScene } from './scenes/main-scene';
+import { MainScene } from './scenes/main';
 
 export const GameConfig: Phaser.Types.Core.GameConfig = {
   title: 'PhaserBeams',
