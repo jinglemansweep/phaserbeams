@@ -6,34 +6,23 @@ const mqttUri = process.env.MQTT_URI as string;
 const mqttUsername = process.env.MQTT_USERNAME as string;
 const mqttPassword = process.env.MQTT_PASSWORD as string;
 
-const client = mqtt.connect(mqttUri, {
-  username: mqttUsername,
-  password: mqttPassword,
-});
-
-client.on('connect', function () {
-  console.log('connected');
-  client.subscribe('presence', function (err) {
-    if (err === undefined) {
-      client.publish('presence', 'Hello mqtt');
-    }
-  });
-});
-
-client.on('message', function (topic, message) {
-  // message is Buffer
-  console.log(message.toString());
-  client.end();
-});
-
-export type SocketIOGame = Phaser.Game & {};
+export type PubSubGame = Phaser.Game & { mqtt: any };
 
 export class Game extends Phaser.Game {
-  public socket: any;
-  /*
+  public mqtt: any;
   constructor(config: Phaser.Types.Core.GameConfig) {
     super(config);
-    this.socket = io();
+    this.mqtt = mqtt.connect(mqttUri, {
+      username: mqttUsername,
+      password: mqttPassword,
+    });
+    this.mqtt.on('connect', () => {
+      console.log(`MQTT: Connected (${mqttUsername}@${mqttUri})`);
+      this.mqtt.on('message', (topic: string, message: Buffer) => {
+        console.log('MQTT: Message', topic, message.toString());
+      });
+    });
+    /*
     this.socket.on('player.list', (players: []) => {
       console.log('player.list', players);
     });
@@ -43,8 +32,8 @@ export class Game extends Phaser.Game {
     this.socket.on('player.disconnect', (id: string) => {
       console.log('player.disconnect', id);
     });
+    */
   }
-  */
 }
 
 window.addEventListener('load', () => {

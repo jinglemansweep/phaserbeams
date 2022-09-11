@@ -28,7 +28,7 @@ export class Strip extends Phaser.GameObjects.Group {
       pixel.setColor(pixels[i]);
       updates.push(intToRGB(pixel.fillColor));
     });
-    console.log('Strip Update');
+    // console.log('Strip Update');
     // await this.wledSend(updates);
   }
 

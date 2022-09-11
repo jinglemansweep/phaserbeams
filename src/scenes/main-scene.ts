@@ -1,11 +1,13 @@
+import mqtt from 'mqtt';
 import { Strip } from '../objects/strip';
 import { Player } from '../objects/player';
 import { PixelColor } from '../interfaces/pixel.interface';
-import { Socket } from 'socket.io';
-import { SocketIOGame } from '../game';
+import { PubSubGame } from '../game';
+
+const mqttTopicPrefix = process.env.MQTT_TOPIC_PREFIX as string;
 
 export class MainScene extends Phaser.Scene {
-  private socket?: Socket;
+  private mqtt?: mqtt.Client;
   private strip?: Strip;
   private players: Player[] = [];
 
@@ -18,7 +20,7 @@ export class MainScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.socket = (this.game as SocketIOGame).socket;
+    this.mqtt = (this.game as PubSubGame).mqtt;
     this.strip = new Strip({ scene: this, pixels: 120 });
     this.players = [
       new Player({
@@ -46,8 +48,7 @@ export class MainScene extends Phaser.Scene {
 
   setupInput(): void {
     this.input.keyboard.on('keydown', async (event: KeyboardEvent) => {
-      // console.log(`Key: ${event.key}`);
-      this.socket?.emit('keyboard', event.key);
+      this.mqtt?.publish(`${mqttTopicPrefix}/key`, event.key);
       if (event.key === 'q') {
         this.players[0].move(-1);
       }
