@@ -24,7 +24,6 @@ export class MainScene extends Phaser.Scene {
     this.userId = this.registry.get('user.id');
     this.strip = new Strip({ scene: this, pixels: 120 });
     this.players = [
-      /*
       new Player({
         strip: this.strip,
         name: 'Player 1',
@@ -37,7 +36,6 @@ export class MainScene extends Phaser.Scene {
         color: 0x00ffff,
         position: 120,
       }),
-      */
     ];
 
     this.setupInput();
