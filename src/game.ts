@@ -1,7 +1,6 @@
 import 'phaser';
 import { GameConfig } from './config';
-import { mqttConnect } from './common';
-import { buildRandomId } from './utils';
+import { MQTT, buildRandomId } from './utils';
 
 const mqttUri = process.env.MQTT_URI as string;
 const mqttUsername = process.env.MQTT_USERNAME as string;
@@ -11,16 +10,16 @@ const mqttTopicPrefix = process.env.MQTT_TOPIC_PREFIX as string;
 export class Game extends Phaser.Game {
   constructor(config: Phaser.Types.Core.GameConfig) {
     super(config);
-    const userId = `user_${buildRandomId()}`;
-    const mqttClient = mqttConnect(
+    const userId = buildRandomId();
+    const mqtt = new MQTT(
       mqttUri,
       mqttUsername,
       mqttPassword,
-      mqttTopicPrefix
+      mqttTopicPrefix,
+      userId
     );
-    mqttClient.publish(`${mqttTopicPrefix}/user/register`, userId);
-    this.registry.set('mqtt.client', mqttClient);
-    this.registry.set('mqtt.prefix', mqttTopicPrefix);
+    mqtt.publish(`register`, userId);
+    this.registry.set('mqtt', mqtt);
     this.registry.set('user.id', userId);
   }
 }

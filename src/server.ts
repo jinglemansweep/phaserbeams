@@ -1,5 +1,5 @@
 import { config } from 'dotenv';
-import { mqttConnect } from './common';
+import { MQTT } from './utils';
 
 config();
 
@@ -8,22 +8,19 @@ const mqttUsername = process.env.MQTT_USERNAME as string;
 const mqttPassword = process.env.MQTT_PASSWORD as string;
 const mqttTopicPrefix = process.env.MQTT_TOPIC_PREFIX as string;
 
-const client = mqttConnect(
-  mqttUri,
-  mqttUsername,
-  mqttPassword,
-  mqttTopicPrefix
-);
+const mqtt = new MQTT(mqttUri, mqttUsername, mqttPassword, mqttTopicPrefix);
 
 console.log('PHASERBEAMS SERVER');
 
 const clients: Record<string, unknown> = {};
 
-client.on('message', function (topic: string, _message: Buffer) {
+mqtt.client.on('message', function (topic: string, _message: Buffer) {
   const message = _message.toString();
-  if (topic === `${mqttTopicPrefix}/client/register`) {
+  const search = topic.match(
+    new RegExp(`(${mqttTopicPrefix})/(?<user>.*)/(?<action>.*)`)
+  );
+  if (search?.groups?.user !== undefined) {
     console.log('CLIENT > REGISTER', message);
     clients[message] = { name: message };
-    client.publish(`${mqttTopicPrefix}/clients/list`, JSON.stringify(clients));
   }
 });
